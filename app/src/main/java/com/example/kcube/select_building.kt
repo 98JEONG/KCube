@@ -4,11 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.RadioButton
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.kcube.CalendarActivity
 import com.example.kcube.Data.Cube
+import com.example.kcube.Data.User
 import com.example.kcube.R
+import com.prolificinteractive.materialcalendarview.CalendarDay
 
 class select_building : AppCompatActivity() {
 
@@ -17,8 +18,11 @@ class select_building : AppCompatActivity() {
         setContentView(R.layout.activity_select_building)
         init()
     }
+
     fun init()
     {
+        var day = intent.getParcelableExtra("DAY") as CalendarDay
+        var user = intent.getParcelableExtra("USER") as User
         val radio = mutableListOf<RadioButton>()
         for(i in R.id.radiobutton01..R.id.radiobutton07){
             radio.add(findViewById(i))
@@ -36,6 +40,8 @@ class select_building : AppCompatActivity() {
                 val selection = Intent(this,selection::class.java)
                 selection.putExtra("building",radio.text)
                 selection.putExtra("nroom",nroom)
+                selection.putExtra("DAY",day)
+                selection.putExtra("USER",user)
                 startActivityForResult(selection,6666)
             }
         }

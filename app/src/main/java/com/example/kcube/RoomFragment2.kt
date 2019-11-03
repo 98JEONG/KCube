@@ -1,16 +1,19 @@
 package com.example.k_kube
 
-import android.content.Context
 import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.LinearLayout
+import android.widget.TableLayout
+import android.widget.TableRow
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.kcube.Data.Cube
 import com.example.kcube.R
+import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.util.*
 
 
@@ -33,23 +36,45 @@ class RoomFragment2 : Fragment() {
     var hour = gc.get(GregorianCalendar.HOUR_OF_DAY).toString()
     var min = gc.get(GregorianCalendar.MINUTE).toString()
     lateinit var linearLayout: LinearLayout
+    lateinit var cube: ArrayList<Cube>
+    lateinit var reserve_room:ArrayList<String>
+    lateinit var day:CalendarDay
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+
+        cube = arrayListOf()
+        reserve_room =  arrayListOf()
         if(arguments!=null){
             nroom = arguments!!.getInt("roomNum")
+            //nroom = 3
+            cube = arguments!!.getParcelableArrayList<Cube>("user")!!
+
+            for(i in cube){
+                Log.d("프래그먼트2",i.name)
+                reserve_room .add(i.name.split(" ")[1])
+            }
+            day = arguments!!.getParcelable<CalendarDay>("day")!!
         }
         else nroom = 3
+        Log.d("프래그먼트2",nroom.toString())
         var view = inflater.inflate(R.layout.fragment_room_fragment2,null)
+
         linearLayout = view.findViewById(R.id.table2)
+        linearLayout.removeAllViews()
+        tableLayout.removeAllViews()
         createTable(row, column,view)
         fill_table(view)
+        Log.d("프래그먼트2",nroom.toString())
+        Log.d("프래그먼트2",reserve_room.size.toString())
+       // Log.d("프래그먼트",reserve_room[0])
         return view
+
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     fun createTable(rows: Int, cols: Int,view:View) {
@@ -93,9 +118,46 @@ class RoomFragment2 : Fragment() {
                             tminute = 0
                         }
                     }
-                    if (thour < hour.toInt() || (thour == hour.toInt() && tminute < min.toInt())) {
-                        register[i][j] = 2;
-                        if (i != 0) textview.text = "x"
+                    if(day == CalendarDay.today()){
+                        if (thour < hour.toInt() || (thour == hour.toInt() && tminute < min.toInt())) {
+                            register[i][j] = 2;
+                            if (i != 0) textview.text = "x"
+                        }else{
+                            for(u in reserve_room){
+                                when(u){
+                                    "4호실"->{
+                                        if(j==0){
+                                            for(k in cube){
+                                                if((thour>=k.dateList[0].time.hour_start && tminute>=k.dateList[0].time.minute_start)&&(thour<=k.dateList[k.dateList.size-1].time.hour_end && tminute <= k.dateList[k.dateList.size-1].time.minute_end)  ){
+                                                    register[i][j] = 2
+                                                    if (i != 0) textview.text = "x"
+                                                }
+                                            }
+                                        }
+                                    }
+                                    "5호실"->{
+                                        if(j==1){
+                                            for(k in cube){
+                                                if((thour>=k.dateList[0].time.hour_start && tminute>=k.dateList[0].time.minute_start)&&(thour<=k.dateList[k.dateList.size-1].time.hour_end && tminute <= k.dateList[k.dateList.size-1].time.minute_end) ){
+                                                    register[i][j] = 2
+                                                    if (i != 0) textview.text = "x"
+                                                }
+                                            }
+                                        }
+                                    }
+                                    "6호실"->{
+                                        if(j==2){
+                                            for(k in cube){
+                                                if((thour>=k.dateList[0].time.hour_start && tminute>=k.dateList[0].time.minute_start)&&(thour<=k.dateList[k.dateList.size-1].time.hour_end && tminute <= k.dateList[k.dateList.size-1].time.minute_end) ){
+                                                    register[i][j] = 2
+                                                    if (i != 0) textview.text = "x"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
                 row.addView(textview)
@@ -103,6 +165,7 @@ class RoomFragment2 : Fragment() {
             tableLayout.addView(row)
 
         }
+        linearLayout.removeAllViewsInLayout()
         linearLayout.addView(tableLayout)
     }
 

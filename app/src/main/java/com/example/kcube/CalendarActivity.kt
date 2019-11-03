@@ -57,10 +57,12 @@ class CalendarActivity : AppCompatActivity(){
         if(select_day != null){
             val selectBuilding = Intent(this, select_building::class.java)
 //            selectBuilding.putExtra("date",select_day!!.day)
+            selectBuilding.putExtra("DAY",select_day)
+            selectBuilding.putExtra("USER",user)
             startActivityForResult(selectBuilding,7777)
             
         }else{
-            Toast.makeText(this,"없음",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"날짜를 선택해 주세요",Toast.LENGTH_SHORT).show()
         }
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -77,7 +79,7 @@ class CalendarActivity : AppCompatActivity(){
     }
     fun makeCalendar(){
         if(intent != null){
-            user = getIntent().getParcelableExtra("USER") as User
+            user = intent.getParcelableExtra("USER") as User
         }
         select_day = CalendarDay.today()
         makeTmp(select_day!!)
