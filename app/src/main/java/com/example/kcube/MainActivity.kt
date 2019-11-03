@@ -5,13 +5,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.kcube.Data.Cube
+import com.example.kcube.Data.MyDate
+import com.example.kcube.Data.MyTime
 import com.example.kcube.Data.User
+import com.prolificinteractive.materialcalendarview.CalendarDay
 import kotlinx.android.synthetic.main.activity_main.*
 
 //로그인
 class MainActivity : AppCompatActivity() {
 
-    val defaultUser = User("김익명","abc123")
+    val list = arrayListOf<Cube>(Cube("공학관", arrayListOf(MyDate(CalendarDay (2019,10,3),
+        MyTime(5,12,9,30),true),MyDate(CalendarDay(2019,10,3),MyTime(10,0,10,30),true))),
+        Cube("중앙도서관", arrayListOf(MyDate(CalendarDay(2019,10,14),MyTime(11,0,11,30),true))))
+    val defaultUser = User("김익명","abc123",list)
     val defaultPW = "5555"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +34,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this,"환영합니다",Toast.LENGTH_SHORT).show()
             Thread.sleep(1000)//1초 sleep
             var intent = Intent(this, CalendarActivity::class.java)
+            intent.putExtra("USER",defaultUser)
             startActivity(intent)
 
         }else{

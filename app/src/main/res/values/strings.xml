@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">KCube</string>
+    <string name="notification_channel_id">"Notification"</string>
+    <string name="notification_channel_name">"Notification Name"</string>
 </resources>
