@@ -1,8 +1,11 @@
 package com.example.k_kube
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +15,7 @@ import android.widget.TableRow
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.kcube.Data.Cube
+import com.example.kcube.Data.MyTime
 import com.example.kcube.R
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import java.util.*
@@ -26,7 +30,7 @@ private const val ARG_PARAM2 = "param2"
 class RoomFragment3 : Fragment() {
     // TODO: Rename and change types of parameters
     var nroom = 0
-    var row = 28
+    var row = 27
     var column = 3
     val tableIdCode = 1234
     var register = Array(row, { IntArray(column) })
@@ -40,6 +44,7 @@ class RoomFragment3 : Fragment() {
     lateinit var cube: ArrayList<Cube>
     lateinit var reserve_room:ArrayList<String>
     lateinit var day: CalendarDay
+    var time = arrayListOf<MyTime>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -73,7 +78,22 @@ class RoomFragment3 : Fragment() {
 
     }
 
-    fun createTable(rows: Int, cols: Int,view:View) {
+    interface OnReserve3{
+        fun onSetReserveTime(time:MyTime)
+        fun removeReserveTime(time:MyTime)
+        fun setRoomNumber(name:String)
+    }
+
+    var Listener:OnReserve3 ?= null
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if(activity != null && activity is OnReserve3){
+            Listener = activity as OnReserve3
+        }
+    }
+    @SuppressLint("ResourceAsColor")
+    fun createTable(rows: Int, cols: Int, view:View) {
         var thour = 0
         var tminute = 0
         for (i in 0 until rows) {
@@ -92,13 +112,26 @@ class RoomFragment3 : Fragment() {
                     textview.setBackgroundResource(R.drawable.border)
                     textview.width = 380
                     textview.height = 110
+                    textview.gravity = Gravity.CENTER
                     textview.setBackgroundResource(R.drawable.border)
                     str = "$i$j"
                     textview.setId(str.toInt())
                     if (i == 0) {
-                        if (j == 0) textview.setText("7호실")
-                        if (j == 1) textview.setText("8호실")
-                        if (j == 2) textview.setText("9호실")
+                        if (j == 0) {
+                            textview.setBackgroundColor(R.color.myGreen)
+                            textview.setTextColor(Color.WHITE)
+                            textview.setText("7호실")
+                        }
+                        if (j == 1) {
+                            textview.setBackgroundColor(R.color.myGreen)
+                            textview.setTextColor(Color.WHITE)
+                            textview.setText("8호실")
+                        }
+                        if (j == 2) {
+                            textview.setBackgroundColor(R.color.myGreen)
+                            textview.setTextColor(Color.WHITE)
+                            textview.setText("9호실")
+                        }
                         textview.textAlignment = View.TEXT_ALIGNMENT_CENTER
                     } else if (i != 0) {
                         if (i % 2 == 0) {
@@ -175,11 +208,39 @@ class RoomFragment3 : Fragment() {
                             textview.setBackgroundColor(Color.GRAY)
                             register[i][j] = 1;
                             map_register.put(i,j)
+                            var t  = textview.text.split(":")
+                            var nextindex = i+1
+                            var next_text:TextView?=null
+                            if(nextindex>row){
+                                next_text!!.text = "22:00"
+                            }else{
+                                next_text = view.findViewById<TextView>("$nextindex$j".toInt())
+                            }
+                            var nextt = next_text!!.text.split(":")
+                            time.add(MyTime(t[0].toInt(),t[1].toInt(),nextt[0].toInt(),nextt[1].toInt()))
+                            Listener!!.onSetReserveTime(MyTime(t[0].toInt(),t[1].toInt(),nextt[0].toInt(),nextt[1].toInt()))
+                            when(j){
+                                0->{
+                                    Listener!!.setRoomNumber("7호실")
+                                }1->{
+                                Listener!!.setRoomNumber("8호실")
+                            }2->{
+                                Listener!!.setRoomNumber("9호실")
+                            }
+                            }
                         } else if (register[i][j] == 1) {
                             textview.setBackgroundColor(Color.TRANSPARENT)
                             textview.setBackgroundResource(R.drawable.border)
                             register[i][j] = 0;
                             map_register.remove(i);
+                            var t  = textview.text.split(":")
+                            for(i in time){
+                                if(i.hour_start==t[0].toInt() && i.minute_end ==t[1].toInt()){
+                                    time.remove(i)
+                                    Listener!!.removeReserveTime(i)
+                                    break
+                                }
+                            }
                         }
                     }
                 }

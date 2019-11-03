@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Handler
 import android.os.IBinder
 import android.os.Message
@@ -60,15 +61,25 @@ class MyService : Service(){
                 intent.putExtra("USER",user!!)
             var pendingIntent = PendingIntent.getActivity(this@MyService,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
             var today = CalendarDay.today()
+            var builer:Notification.Builder
             for(i in user!!.cubeList){
                 if(today == i.dateList[0].date){
-                    Notify = Notification.Builder(this@MyService)
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("오늘 케이큐브 예약이 있습니다")
-                        .setContentText("예약 내용을 확인하세요")
-                        .setTicker("알림")
-                        .setContentIntent(pendingIntent)
-                        .build()
+                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+                        builer = Notification.Builder(this@MyService)
+                            .setContentTitle("오늘 케이큐브 예약이 있습니다")
+                            .setContentText("예약 내용을 확인하세요")
+                            .setTicker("알림")
+                            .setContentIntent(pendingIntent)
+                            .setSmallIcon(R.drawable.smalllogo)
+                    }else{
+                        builer = Notification.Builder(this@MyService)
+                            .setContentTitle("오늘 케이큐브 예약이 있습니다")
+                            .setContentText("예약 내용을 확인하세요")
+                            .setTicker("알림")
+                            .setContentIntent(pendingIntent)
+                            .setSmallIcon(R.mipmap.smalllogo)
+                    }
+                    Notify = builer.build()
                     Notify!!.flags = Notification.FLAG_AUTO_CANCEL
                     Notifi_M!!.notify(777,Notify)
                 }

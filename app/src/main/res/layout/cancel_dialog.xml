@@ -14,13 +14,14 @@
             android:layout_height="wrap_content"
             android:text="공간"
             android:id="@+id/check_name"
-            android:textScaleX="3"
+           android:textSize="30dp"
             android:gravity="center"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="시간"
+            android:textSize="20dp"
             android:id="@+id/check_time"
             android:gravity="center"/>
 
@@ -29,6 +30,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/check_cancel_btn"
             android:text="예약취소"
+            android:textColor="#3E6B4C"
             android:background="@null"/>
     </LinearLayout>
 

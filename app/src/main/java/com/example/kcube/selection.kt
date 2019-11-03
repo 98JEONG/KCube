@@ -18,7 +18,23 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 import kotlinx.android.synthetic.main.activity_selection.*
 import java.util.*
 
-class selection : AppCompatActivity() {
+class selection : AppCompatActivity(),RoomFragment1.OnReserve1,RoomFragment2.OnReserve2,RoomFragment3.OnReserve3 {
+    var number = ""
+    override fun setRoomNumber(name: String) {
+       // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        number = name
+    }
+
+    var time = arrayListOf<MyTime>()
+    override fun removeReserveTime(time: MyTime) {
+       // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.time.remove(time)
+    }
+
+    override fun onSetReserveTime(time: MyTime) {
+       // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.time.add(time)
+    }
     var nroom=0
     var row = 28
     var column = 3
@@ -65,7 +81,8 @@ class selection : AppCompatActivity() {
 //            Log.d("fefefefefef",frag1.toString())
             Toast.makeText(this.applicationContext,"예약이 완료되었습니다.",Toast.LENGTH_SHORT).show()
             val selection = Intent(this,select_building::class.java)
-            selection.putExtra("register", Cube(bname.text.toString(), arrayListOf(MyDate(day!!, MyTime(21,0,21,30),true),MyDate(day!!, MyTime(22,0,22,30),true))))
+            selection.putExtra("register", Cube(bname.text.toString()+" "+number.toString(), arrayListOf(MyDate(day!!, time[0],true),MyDate(day!!, time[time.size-1],true))))
+            Log.d("리스너",time.size.toString())
             setResult(Activity.RESULT_OK,selection)
             finish()
             //startActivity(selection)

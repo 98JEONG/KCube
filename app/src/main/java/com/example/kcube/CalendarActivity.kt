@@ -55,11 +55,25 @@ class CalendarActivity : AppCompatActivity(){
     fun clickReserve(view:View){
         //예약하기를 눌렀을 떄
         if(select_day != null){
-            val selectBuilding = Intent(this, select_building::class.java)
+            makeTmp(select_day!!)
+            var time = 0
+            for(i in tmp){
+                var hour =i.dateList[i.dateList.size-1].time.hour_end- i.dateList[0].time.hour_start
+                var minute =  i.dateList[i.dateList.size-1].time.minute_end-i.dateList[0].time.minute_start
+                time += (hour*60)+minute
+            }
+            if(time>= 180){
+                //3시간이 지났으면
+                Toast.makeText(this,"오늘 하루는 더이상 예약할 수 없어요",Toast.LENGTH_SHORT).show()
+            }else{
+                val selectBuilding = Intent(this, select_building::class.java)
 //            selectBuilding.putExtra("date",select_day!!.day)
-            selectBuilding.putExtra("DAY",select_day)
-            selectBuilding.putExtra("USER",user)
-            startActivityForResult(selectBuilding,7777)
+                selectBuilding.putExtra("DAY",select_day)
+                selectBuilding.putExtra("USER",user)
+                startActivityForResult(selectBuilding,7777)
+
+            }
+
             
         }else{
             Toast.makeText(this,"날짜를 선택해 주세요",Toast.LENGTH_SHORT).show()
@@ -72,7 +86,7 @@ class CalendarActivity : AppCompatActivity(){
             var t = data!!.getParcelableExtra("register") as Cube
             Log.d("크기",tmp.size.toString())
             user.cubeList.add(t)
-            makeTmp(CalendarDay.today())
+            makeTmp(select_day!!)
             Log.d("크기",tmp.size.toString())
             initLayout(tmp)
         }
