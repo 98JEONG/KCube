@@ -1,22 +1,20 @@
 package com.example.kcube
 
-import android.app.*
-import android.content.Context
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.AsyncTask
-import android.os.Build
 import android.os.Bundle
 import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kcube.Adapter.ReserveListAdapter
 import com.example.kcube.Data.Cube
 import com.example.kcube.Data.User
+import com.example.kcube.Service.MyService
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
@@ -45,6 +43,8 @@ class CalendarActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
+        //Log.d("스레드",Calendar.getInstance().time.toString())
+        Log.d("스레드",System.currentTimeMillis().toString())
         makeCalendar()
         makePushNotification()
     }
@@ -146,48 +146,10 @@ class CalendarActivity : AppCompatActivity(){
         builder.create().show()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun makePushNotification(){
-        val CHANNELID = "Notification"
-        val notificationChannel = NotificationChannel(
-            CHANNELID,
-            "TIme check Notification",
-            NotificationManager.IMPORTANCE_DEFAULT
-        )
-
-        notificationChannel.enableVibration(true)
-        notificationChannel.vibrationPattern = longArrayOf(100,200,100,200)
-
-        notificationChannel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
-
-        //시스템에 권한을 요청하여 생성
-       // var notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        makeTmp( CalendarDay.today())
-        var alarmManager = this.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val builder = Notification.Builder(this)
-            .setContentTitle(tmp[0].name)
-            .setContentText("예약 내용을 확인하세요!")
-            .setAutoCancel(true)
-
-        var intent = Intent(this,CalendarActivity::class.java)
+        var intent = Intent(this,MyService::class.java)
         intent.putExtra("USER",user)
-        var pIntent = PendingIntent.getActivity(this,0,intent,PendingIntent.FLAG_UPDATE_CURRENT)
-
-        builder.setContentIntent(pIntent)
-        var calendar = Calendar.getInstance()
-        var time = tmp[0].dateList[0].time.hour_start*3600+tmp[0].dateList[0].time.minute_start*60-30*60
-        calendar.set(Calendar.YEAR,tmp[0].dateList[0].date.year)
-        calendar.set(Calendar.MONTH,tmp[0].dateList[0].date.month)
-        calendar.set(Calendar.DATE,tmp[0].dateList[0].date.day)
-        calendar.set(Calendar.HOUR,time/3600)
-        calendar.set(Calendar.MINUTE,(time%3600)/60)
-        calendar.set(Calendar.SECOND,0)
-        alarmManager.set(AlarmManager.RTC,calendar.timeInMillis,pIntent)
-
-        val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        manager.createNotificationChannel(notificationChannel)
-
-        manager.notify(2,builder.build())
+        startService(intent)
     }
 
 

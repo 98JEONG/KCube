@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     val list = arrayListOf<Cube>(Cube("공학관", arrayListOf(MyDate(CalendarDay (2019,10,3),
-        MyTime(5,12,9,30),true),MyDate(CalendarDay(2019,10,3),MyTime(10,0,10,30),true))),
+        MyTime(19,25,9,30),true),MyDate(CalendarDay(2019,10,3),MyTime(10,0,10,30),true))),
         Cube("중앙도서관", arrayListOf(MyDate(CalendarDay(2019,10,14),MyTime(11,0,11,30),true))))
     val defaultUser = User("김익명","abc123",list)
     val defaultPW = "5555"
