@@ -1,5 +1,6 @@
 package com.example.kcube
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
@@ -11,6 +12,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.k_kube.select_building
 import com.example.kcube.Adapter.ReserveListAdapter
 import com.example.kcube.Data.Cube
 import com.example.kcube.Data.User
@@ -49,15 +51,29 @@ class CalendarActivity : AppCompatActivity(){
         makePushNotification()
     }
 
+
     fun clickReserve(view:View){
         //예약하기를 눌렀을 떄
         if(select_day != null){
-            Toast.makeText(this,select_day.toString(),Toast.LENGTH_SHORT).show()
+            val selectBuilding = Intent(this, select_building::class.java)
+//            selectBuilding.putExtra("date",select_day!!.day)
+            startActivityForResult(selectBuilding,7777)
         }else{
             Toast.makeText(this,"없음",Toast.LENGTH_SHORT).show()
         }
     }
-
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==7777 && resultCode == Activity.RESULT_OK){
+            Log.d("크기",tmp.size.toString())
+            var t = data!!.getParcelableExtra("register") as Cube
+            Log.d("크기",tmp.size.toString())
+            user.cubeList.add(t)
+            makeTmp(CalendarDay.today())
+            Log.d("크기",tmp.size.toString())
+            initLayout(tmp)
+        }
+    }
     fun makeCalendar(){
         if(intent != null){
             user = getIntent().getParcelableExtra("USER") as User
