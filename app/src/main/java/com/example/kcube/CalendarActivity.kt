@@ -58,6 +58,7 @@ class CalendarActivity : AppCompatActivity(){
             val selectBuilding = Intent(this, select_building::class.java)
 //            selectBuilding.putExtra("date",select_day!!.day)
             startActivityForResult(selectBuilding,7777)
+            
         }else{
             Toast.makeText(this,"없음",Toast.LENGTH_SHORT).show()
         }
