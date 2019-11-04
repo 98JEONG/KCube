@@ -89,6 +89,7 @@ class CalendarActivity : AppCompatActivity(){
             makeTmp(select_day!!)
             Log.d("크기",tmp.size.toString())
             initLayout(tmp)
+            MarkThread(user.cubeList!!,calendarView).executeOnExecutor(Executors.newSingleThreadExecutor())
         }
     }
     fun makeCalendar(){

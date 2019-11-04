@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         if(id == defaultUser.id && pw == defaultPW){
             Toast.makeText(this,"환영합니다",Toast.LENGTH_SHORT).show()
             Thread.sleep(1000)//1초 sleep
-            var intent = Intent(this, CalendarActivity::class.java)
+            var intent = Intent(this, ExplanationActivity::class.java)
             intent.putExtra("USER",defaultUser)
             startActivity(intent)
 
