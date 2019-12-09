@@ -15,7 +15,7 @@
         android:src="@drawable/title"
         android:scaleType="fitXY"/>
 
-    <RadioGroup
+  <!--  <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/building">
@@ -90,6 +90,99 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginBottom="50dp"/>
-    </RadioGroup>
+    </RadioGroup>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center">
+        <CheckBox
+            android:id="@+id/radiobutton01"
+            android:text="전체"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:checked="true"
+          />
+        <CheckBox
+            android:id="@+id/radiobutton02"
+            android:text="공학관"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:layout_margin="10dp"
+        />
+        <CheckBox
+            android:id="@+id/radiobutton03"
+            android:text="생명과학관"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            />
+        <CheckBox
+            android:id="@+id/radiobutton04"
+            android:text="상허연구관"
+            android:layout_margin="10dp"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <CheckBox
+            android:id="@+id/radiobutton05"
+            android:text="상허기념도서관"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"/>
+        <CheckBox
+            android:id="@+id/radiobutton06"
+            android:text="상허기념도서관 C&amp;C Space"
+            android:textSize="20dp"
+            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"/>
+      <CheckBox
+          android:id="@+id/radiobutton07"
+          android:text="동물생명과학관"
+          android:textSize="20dp"
+          android:layout_margin="10dp"
+          android:textColor="#ffffff"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>
+        <CheckBox
+            android:id="@+id/radiobutton08"
+            android:text="생명과학관 Startup Ground"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <CheckBox
+            android:id="@+id/radiobutton09"
+            android:text="생명과학관 BIO Factory"
+            android:textSize="20dp"
+            android:layout_margin="10dp"
+            android:textColor="#ffffff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:layout_margin="20dp"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:textColor="#3E6B4C"
+            android:text="시간 선택"
+            android:onClick="timeSelect"/>
+    </LinearLayout>
+
 </LinearLayout>
 

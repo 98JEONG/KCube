@@ -82,12 +82,9 @@ class CalendarActivity : AppCompatActivity(){
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode==7777 && resultCode == Activity.RESULT_OK){
-            Log.d("크기",tmp.size.toString())
             var t = data!!.getParcelableExtra("register") as Cube
-            Log.d("크기",tmp.size.toString())
             user.cubeList.add(t)
             makeTmp(select_day!!)
-            Log.d("크기",tmp.size.toString())
             initLayout(tmp)
             MarkThread(user.cubeList!!,calendarView).executeOnExecutor(Executors.newSingleThreadExecutor())
         }
@@ -284,6 +281,7 @@ class CalendarActivity : AppCompatActivity(){
         constructor(dates:ArrayList<Cube>,view:com.prolificinteractive.materialcalendarview.MaterialCalendarView){
             this.dates = dates
             this.view = view
+            Log.d("사이즈",dates.size.toString())
         }
 
         override fun doInBackground(vararg p0: Void?): ArrayList<Cube> {

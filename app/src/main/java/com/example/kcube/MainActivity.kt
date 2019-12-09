@@ -30,13 +30,15 @@ class MainActivity : AppCompatActivity() {
         //로그인 버튼 눌렀을 때
         var id = user_id.text.toString()
         var pw = user_pw.text.toString()
+//        var intent = Intent(this, ExplanationActivity::class.java)
+//        intent.putExtra("USER",defaultUser)
+//        startActivity(intent)
         if(id == defaultUser.id && pw == defaultPW){
             Toast.makeText(this,"환영합니다",Toast.LENGTH_SHORT).show()
             Thread.sleep(1000)//1초 sleep
             var intent = Intent(this, ExplanationActivity::class.java)
             intent.putExtra("USER",defaultUser)
             startActivity(intent)
-
         }else{
             Toast.makeText(this,"로그인 정보가 틀렸습니다",Toast.LENGTH_SHORT).show()
             user_id.text.clear()

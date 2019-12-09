@@ -59,12 +59,13 @@
                 android:layout_margin="3dp"
                 android:id="@+id/user_pw"/>
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
                 android:text="로그인"
-                android:textColor="#ffffff"
-                android:background="#00ffffff"
+                android:layout_marginTop="30dp"
+                android:textColor="#3E6B4C"
+                android:background="#ffffff"
                 android:id="@+id/login_btn"
                 android:onClick="clickLogin"/>
 

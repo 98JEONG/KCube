@@ -20,6 +20,7 @@ import java.util.*
 
 class selection : AppCompatActivity(),RoomFragment1.OnReserve1,RoomFragment2.OnReserve2,RoomFragment3.OnReserve3 {
     var number = ""
+    lateinit var cube:ArrayList<Cube>
     override fun setRoomNumber(name: String) {
        // TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
         number = name
@@ -50,6 +51,7 @@ class selection : AppCompatActivity(),RoomFragment1.OnReserve1,RoomFragment2.OnR
         setContentView(R.layout.activity_selection)
         init()
     }
+
     fun init(){
         var day:CalendarDay?=null
         var user: User?=null
@@ -65,6 +67,10 @@ class selection : AppCompatActivity(),RoomFragment1.OnReserve1,RoomFragment2.OnR
         if(intent.hasExtra("USER")){
             user = intent.getParcelableExtra("USER") as User
         }
+        cube = arrayListOf()
+        cube = intent.getParcelableArrayListExtra("CUBE")//선택한 cube리스트
+        Toast.makeText(this,cube.size.toString(),Toast.LENGTH_SHORT).show()
+
         var tmp:ArrayList<Cube>
         Log.d("프래그먼트 크기",nroom.toString())
         tmp= arrayListOf()

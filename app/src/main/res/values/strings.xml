@@ -9,4 +9,7 @@
     <string name="str2">\n① 이용 대상: 학부 재학생/휴학생, 대학원생\n 단, 일반적인 큐브실과 달리 멀티미디어 실습 공간인 M Studio,\n이러닝 스튜디오의 경우 교원도 이용가능\n② 대여 가능시간: 최대 3시간(30분 단위로 신청가능)\n③ 예약 가능 기간: 신청일 기준 14일 이내\n "</string>
     <string name="str6">\n일부 큐브에는 대영 가능한 기자재가 있습니다.\n\n① 이용 방법\n * 큐브 예약 신청 화면에서 대여가능 기자재 선택\n* 해당 부서에서 대여 가능 여부를 SMS로 안내함 \n\n② SMS통보 시기\n * 매일 ~16:00이전 신청: 당일 17:00까지 통보\n* 매일 16:00~24:00신청: 익일 ~09:30까지 통보\n\n ③수령 및 반납\n* 대여 가능 통보 받은 경우 시작시간 10분 전부터 방문 후 수령\n* 본인의 대여 종료시간 후 10분 이내 반납\n</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
